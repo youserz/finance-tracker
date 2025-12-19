@@ -1,20 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import CategoryPieChart from '@/components/Charts/CategoryPieChart';
 import BalanceLineChart from '@/components/Charts/BalanceLineChart';
+import CategoryPieChart from '@/components/Charts/CategoryPieChart';
 import IncomeExpenseChart from '@/components/Charts/IncomeExpenseChart';
 import { db } from '@/services/database';
 import { Transaction } from '@/types';
+import React, { useEffect, useState } from 'react';
+import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ChartsScreen() {
-  const [expensesByCategory, setExpensesByCategory] = useState
-    { categoria: string; total: number }[]
-  >([]);
-  const [monthlyData, setMonthlyData] = useState
-    { mes: string; entradas: number; saidas: number }[]
-  >([]);
+  const [expensesByCategory, setExpensesByCategory] = useState<{ categoria: string; total: number }[]>([]);
+  const [monthlyData, setMonthlyData] = useState<{ mes: string; entradas: number; saidas: number }[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [currentBalance, setCurrentBalance] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -31,7 +26,6 @@ export default function ChartsScreen() {
         db.getTransactions(),
         db.getBalance(),
       ]);
-
       setExpensesByCategory(expenses);
       setMonthlyData(monthly);
       setTransactions(allTransactions);
